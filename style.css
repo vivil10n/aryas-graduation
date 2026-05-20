@@ -89,7 +89,7 @@ body::before {
 }
 
 .site-shell {
-  min-height: 100vh;
+  min-height: 100dvh;
   margin-left: 230px;
   display: flex;
   align-items: center;
@@ -195,32 +195,58 @@ pre {
 }
 
 @media (max-width: 760px) {
+  body {
+    min-height: 100dvh;
+    overflow-x: hidden;
+  }
+
   .toolbar {
     position: static;
     width: 100%;
     height: auto;
     border-right: none;
     border-bottom: 1px solid var(--line);
-    gap: 24px;
+    gap: 20px;
+    padding: 20px;
   }
 
   .toolbar-nav {
     grid-template-columns: repeat(2, 1fr);
+    gap: 7px;
   }
 
   .site-shell {
     margin-left: 0;
-    padding: 28px 20px;
+    min-height: auto;
+    padding: 20px;
     align-items: flex-start;
   }
 
   .panel {
-    min-height: 440px;
-    padding: 26px 22px;
+    min-height: auto;
+    padding: 22px 18px;
+  }
+
+  .section-label {
+    margin-bottom: 20px;
   }
 
   pre {
     font-size: 12px;
-    line-height: 1.65;
+    line-height: 1.6;
+  }
+
+  .controls {
+    margin-top: 24px;
+  }
+
+  .site-checklist {
+    margin-top: 22px;
+    gap: 8px;
+  }
+
+  .site-checklist li {
+    padding-top: 9px;
+    padding-bottom: 9px;
   }
 }
