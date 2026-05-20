@@ -26,7 +26,6 @@ body {
   font-family: "Courier New", Courier, monospace;
 }
 
-/* subtle architectural grid */
 body::before {
   content: "";
   position: fixed;
@@ -39,6 +38,7 @@ body::before {
   z-index: -1;
 }
 
+/* toolbar */
 .toolbar {
   position: fixed;
   left: 0;
@@ -57,6 +57,7 @@ body::before {
   flex: 1;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 .toolbar-title {
@@ -65,7 +66,7 @@ body::before {
   text-transform: lowercase;
 }
 
-/* mini clickable house / floor plan */
+/* house / floor plan */
 .floor-plan {
   position: relative;
   margin: auto 0;
@@ -74,26 +75,28 @@ body::before {
   background: var(--bg);
 }
 
-/* little house roof */
+/* roof lines - starts from the house corners */
 .floor-plan::before,
 .floor-plan::after {
   content: "";
   position: absolute;
-  top: -31px;
-  width: 53%;
+  top: -1px;
+  width: 57%;
   height: 1px;
   background: var(--line);
-  transform-origin: bottom;
+  pointer-events: none;
 }
 
 .floor-plan::before {
-  left: -2px;
-  transform: rotate(-28deg);
+  left: 0;
+  transform-origin: left center;
+  transform: rotate(-25deg);
 }
 
 .floor-plan::after {
-  right: -2px;
-  transform: rotate(28deg);
+  right: 0;
+  transform-origin: right center;
+  transform: rotate(25deg);
 }
 
 .room-row {
@@ -125,10 +128,6 @@ body::before {
   border-bottom: 0;
 }
 
-.room-wide {
-  width: 100%;
-}
-
 .room span {
   font-size: 11px;
   letter-spacing: 0.08em;
@@ -154,6 +153,7 @@ body::before {
   margin-top: 28px;
 }
 
+/* main */
 .site-shell {
   height: 100dvh;
   margin-left: 250px;
@@ -192,6 +192,7 @@ pre {
   color: var(--text);
 }
 
+/* checklist */
 .site-checklist {
   list-style: none;
   padding: 0;
@@ -233,6 +234,7 @@ pre {
   display: none;
 }
 
+/* controls */
 .controls {
   display: flex;
   justify-content: space-between;
@@ -276,20 +278,27 @@ pre {
 @media (max-width: 760px) {
   .toolbar {
     width: 100%;
-    height: 220px;
-    padding: 14px 20px 16px;
+    height: 150px;
+    padding: 10px 18px 12px;
     border-right: none;
     border-bottom: 1px solid var(--line);
   }
 
   .toolbar > div:first-child {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
+    justify-content: center;
   }
 
   .toolbar-title {
-    font-size: 12px;
+    position: absolute;
+    top: 23px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 5;
+    background: var(--bg);
+    padding: 0 8px;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
   }
 
   .toolbar-footer {
@@ -297,104 +306,31 @@ pre {
   }
 
   .floor-plan {
-    width: min(260px, 78vw);
-    margin: 34px auto 0;
+    width: min(215px, 62vw);
+    margin: 48px auto 0;
   }
 
   .floor-plan::before,
   .floor-plan::after {
-    top: -24px;
-    width: 53%;
+    top: -1px;
+    width: 56%;
   }
 
   .floor-plan::before {
-    left: -2px;
-    transform: rotate(-25deg);
+    transform: rotate(-24deg);
   }
 
   .floor-plan::after {
-    right: -2px;
-    transform: rotate(25deg);
+    transform: rotate(24deg);
   }
 
   .room {
-    min-height: 26px;
-    padding: 5px 7px;
+    min-height: 18px;
+    padding: 2px 6px;
   }
 
   .room span {
-    font-size: 9px;
-  }
-
-  .room small {
-    font-size: 7px;
-  }
-
-  .site-shell {
-    height: calc(100dvh - 220px);
-    margin-left: 0;
-    margin-top: 220px;
-    padding: 16px 18px;
-    align-items: stretch;
-  }
-
-  .panel {
-    max-height: none;
-    height: 100%;
-    min-height: 0;
-    padding: 22px;
-  }
-
-  .section-label {
-    font-size: 10px;
-    margin-bottom: 18px;
-  }
-
-  pre {
-    font-size: 11px;
-    line-height: 1.55;
-  }
-
-  .site-checklist {
-    margin-top: 18px;
-    gap: 7px;
-    font-size: 10px;
-  }
-
-  .site-checklist li {
-    padding: 7px 9px 7px 28px;
-  }
-
-  .site-checklist li::before {
-    left: 10px;
-    top: 7px;
-  }
-
-  .controls {
-    margin-top: 18px;
-  }
-
-  .control-button {
-    width: 82px;
-    padding: 8px;
-    font-size: 10px;
-  }
-}
-
-/* very short phones */
-@media (max-width: 760px) and (max-height: 700px) {
-  .toolbar {
-    height: 190px;
-  }
-
-  .floor-plan {
-    width: min(230px, 74vw);
-    margin-top: 28px;
-  }
-
-  .room {
-    min-height: 22px;
-    padding: 4px 6px;
+    font-size: 8px;
   }
 
   .room small {
@@ -402,17 +338,103 @@ pre {
   }
 
   .site-shell {
-    height: calc(100dvh - 190px);
-    margin-top: 190px;
-    padding: 12px 16px;
+    height: calc(100dvh - 150px);
+    margin-left: 0;
+    margin-top: 150px;
+    padding: 10px 14px;
+    align-items: stretch;
   }
 
   .panel {
+    width: 100%;
+    height: 100%;
+    max-height: none;
+    min-height: 0;
     padding: 18px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .section-label {
+    font-size: 10px;
+    margin-bottom: 12px;
   }
 
   pre {
+    flex: 1;
+    overflow-y: auto;
+    font-size: 10.5px;
+    line-height: 1.42;
+    padding-right: 4px;
+  }
+
+  .site-checklist {
+    flex: 1;
+    overflow-y: auto;
+    margin-top: 12px;
+    gap: 6px;
     font-size: 10px;
-    line-height: 1.45;
+    padding-right: 4px;
+  }
+
+  .site-checklist li {
+    padding: 6px 8px 6px 27px;
+  }
+
+  .site-checklist li::before {
+    left: 9px;
+    top: 6px;
+  }
+
+  .controls {
+    margin-top: 12px;
+    flex-shrink: 0;
+  }
+
+  .control-button {
+    width: 78px;
+    padding: 7px;
+    font-size: 10px;
+  }
+}
+
+/* very short phones */
+@media (max-width: 760px) and (max-height: 700px) {
+  .toolbar {
+    height: 132px;
+  }
+
+  .toolbar-title {
+    top: 20px;
+    font-size: 9px;
+  }
+
+  .floor-plan {
+    width: min(195px, 58vw);
+    margin-top: 43px;
+  }
+
+  .room {
+    min-height: 15px;
+    padding: 1px 5px;
+  }
+
+  .site-shell {
+    height: calc(100dvh - 132px);
+    margin-top: 132px;
+    padding: 8px 12px;
+  }
+
+  .panel {
+    padding: 16px;
+  }
+
+  pre {
+    font-size: 9.5px;
+    line-height: 1.35;
+  }
+
+  .controls {
+    margin-top: 8px;
   }
 }

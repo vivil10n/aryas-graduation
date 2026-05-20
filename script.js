@@ -126,7 +126,6 @@ vivian`
 const typedText = document.getElementById("typed-text");
 const sectionLabel = document.getElementById("section-label");
 
-/* This now selects BOTH the normal nav buttons and the floor plan rooms */
 const navButtons = document.querySelectorAll(".room");
 
 const nextButton = document.getElementById("next-button");
