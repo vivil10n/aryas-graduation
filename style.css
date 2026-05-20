@@ -11,21 +11,15 @@
   --panel: #f7f6f1;
 }
 
-html,
 body {
   margin: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
-body {
-  min-height: 100dvh;
+  min-height: 100vh;
   background: var(--bg);
   color: var(--text);
   font-family: "Courier New", Courier, monospace;
 }
 
+/* subtle architectural grid */
 body::before {
   content: "";
   position: fixed;
@@ -38,26 +32,19 @@ body::before {
   z-index: -1;
 }
 
-/* toolbar */
 .toolbar {
   position: fixed;
   left: 0;
   top: 0;
-  width: 250px;
-  height: 100dvh;
+  width: 230px;
+  height: 100vh;
   padding: 28px 24px;
   border-right: 1px solid var(--line);
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   background: rgba(247, 246, 241, 0.92);
   backdrop-filter: blur(6px);
-}
-
-.toolbar > div:first-child {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  position: relative;
 }
 
 .toolbar-title {
@@ -66,83 +53,32 @@ body::before {
   text-transform: lowercase;
 }
 
-/* house / floor plan */
-.floor-plan {
-  position: relative;
-  margin: auto 0;
-  border: 1px solid var(--line);
+.toolbar-nav {
   display: grid;
-  background: var(--bg);
+  gap: 8px;
 }
 
-/* roof lines - starts from the house corners */
-.floor-plan::before,
-.floor-plan::after {
-  content: "";
-  position: absolute;
-  top: -1px;
-  width: 57%;
-  height: 1px;
-  background: var(--line);
-  pointer-events: none;
-}
-
-.floor-plan::before {
-  left: 0;
-  transform-origin: left center;
-  transform: rotate(-25deg);
-}
-
-.floor-plan::after {
-  right: 0;
-  transform-origin: right center;
-  transform: rotate(25deg);
-}
-
-.room-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-}
-
-.room {
+.nav-button,
+.control-button {
   font-family: inherit;
   background: transparent;
-  border: 0;
-  border-bottom: 1px solid var(--line);
   color: var(--text);
-  min-height: 54px;
-  padding: 9px;
-  cursor: pointer;
-  text-align: left;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  transition: background 0.2s ease;
-}
-
-.room-row .room:first-child {
-  border-right: 1px solid var(--line);
-}
-
-.floor-plan > .room:last-child {
-  border-bottom: 0;
-}
-
-.room span {
+  border: 1px solid var(--soft-line);
+  padding: 9px 10px;
   font-size: 11px;
-  letter-spacing: 0.08em;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
 }
 
-.room small {
-  font-size: 9px;
-  line-height: 1.2;
-  color: var(--muted);
-  letter-spacing: 0.04em;
+.nav-button:hover,
+.control-button:hover {
+  border-color: var(--line);
 }
 
-.room:hover,
-.room.active {
-  background: rgba(17, 17, 17, 0.06);
+.nav-button.active {
+  border-color: var(--line);
+  background: rgba(17, 17, 17, 0.04);
 }
 
 .toolbar-footer {
@@ -150,13 +86,11 @@ body::before {
   line-height: 1.5;
   letter-spacing: 0.05em;
   color: var(--muted);
-  margin-top: 28px;
 }
 
-/* main */
 .site-shell {
-  height: 100dvh;
-  margin-left: 250px;
+  min-height: 100vh;
+  margin-left: 230px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -166,7 +100,7 @@ body::before {
 .panel {
   width: 100%;
   max-width: 680px;
-  max-height: calc(100dvh - 96px);
+  min-height: 420px;
   border: 1px solid var(--line);
   background: var(--panel);
   padding: 34px;
@@ -192,7 +126,6 @@ pre {
   color: var(--text);
 }
 
-/* checklist */
 .site-checklist {
   list-style: none;
   padding: 0;
@@ -234,7 +167,6 @@ pre {
   display: none;
 }
 
-/* controls */
 .controls {
   display: flex;
   justify-content: space-between;
@@ -244,19 +176,7 @@ pre {
 
 .control-button {
   width: 100px;
-  font-family: inherit;
-  background: transparent;
-  color: var(--text);
-  border: 1px solid var(--soft-line);
-  padding: 9px 10px;
-  font-size: 11px;
   text-align: center;
-  cursor: pointer;
-  transition: border-color 0.2s ease, background 0.2s ease;
-}
-
-.control-button:hover {
-  border-color: var(--line);
 }
 
 .cursor::after {
@@ -274,167 +194,33 @@ pre {
   }
 }
 
-/* mobile */
 @media (max-width: 760px) {
   .toolbar {
+    position: static;
     width: 100%;
-    height: 150px;
-    padding: 10px 18px 12px;
+    height: auto;
     border-right: none;
     border-bottom: 1px solid var(--line);
+    gap: 24px;
   }
 
-  .toolbar > div:first-child {
-    justify-content: center;
-  }
-
-  .toolbar-title {
-    position: absolute;
-    top: 23px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 5;
-    background: var(--bg);
-    padding: 0 8px;
-    font-size: 10px;
-    letter-spacing: 0.08em;
-    white-space: nowrap;
-  }
-
-  .toolbar-footer {
-    display: none;
-  }
-
-  .floor-plan {
-    width: min(215px, 62vw);
-    margin: 48px auto 0;
-  }
-
-  .floor-plan::before,
-  .floor-plan::after {
-    top: -1px;
-    width: 56%;
-  }
-
-  .floor-plan::before {
-    transform: rotate(-24deg);
-  }
-
-  .floor-plan::after {
-    transform: rotate(24deg);
-  }
-
-  .room {
-    min-height: 18px;
-    padding: 2px 6px;
-  }
-
-  .room span {
-    font-size: 8px;
-  }
-
-  .room small {
-    display: none;
+  .toolbar-nav {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .site-shell {
-    height: calc(100dvh - 150px);
     margin-left: 0;
-    margin-top: 150px;
-    padding: 10px 14px;
-    align-items: stretch;
+    padding: 28px 20px;
+    align-items: flex-start;
   }
 
   .panel {
-    width: 100%;
-    height: 100%;
-    max-height: none;
-    min-height: 0;
-    padding: 18px;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .section-label {
-    font-size: 10px;
-    margin-bottom: 12px;
+    min-height: 440px;
+    padding: 26px 22px;
   }
 
   pre {
-    flex: 1;
-    overflow-y: auto;
-    font-size: 10.5px;
-    line-height: 1.42;
-    padding-right: 4px;
-  }
-
-  .site-checklist {
-    flex: 1;
-    overflow-y: auto;
-    margin-top: 12px;
-    gap: 6px;
-    font-size: 10px;
-    padding-right: 4px;
-  }
-
-  .site-checklist li {
-    padding: 6px 8px 6px 27px;
-  }
-
-  .site-checklist li::before {
-    left: 9px;
-    top: 6px;
-  }
-
-  .controls {
-    margin-top: 12px;
-    flex-shrink: 0;
-  }
-
-  .control-button {
-    width: 78px;
-    padding: 7px;
-    font-size: 10px;
-  }
-}
-
-/* very short phones */
-@media (max-width: 760px) and (max-height: 700px) {
-  .toolbar {
-    height: 132px;
-  }
-
-  .toolbar-title {
-    top: 20px;
-    font-size: 9px;
-  }
-
-  .floor-plan {
-    width: min(195px, 58vw);
-    margin-top: 43px;
-  }
-
-  .room {
-    min-height: 15px;
-    padding: 1px 5px;
-  }
-
-  .site-shell {
-    height: calc(100dvh - 132px);
-    margin-top: 132px;
-    padding: 8px 12px;
-  }
-
-  .panel {
-    padding: 16px;
-  }
-
-  pre {
-    font-size: 9.5px;
-    line-height: 1.35;
-  }
-
-  .controls {
-    margin-top: 8px;
+    font-size: 12px;
+    line-height: 1.65;
   }
 }

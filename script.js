@@ -118,16 +118,21 @@ i feel really lucky to know.
 i hope we see each other
 more in 2026.
 
+i have tried to make this 
+architecture themed though 
+i think you would know better 
+than anyone if i have succeeded. 
+
+how did i do?
+
 built with love,
-vivian`
+vivian <3`
   }
 ];
 
 const typedText = document.getElementById("typed-text");
 const sectionLabel = document.getElementById("section-label");
-
-const navButtons = document.querySelectorAll(".room");
-
+const navButtons = document.querySelectorAll(".nav-button");
 const nextButton = document.getElementById("next-button");
 const prevButton = document.getElementById("prev-button");
 const siteChecklist = document.getElementById("site-checklist");
